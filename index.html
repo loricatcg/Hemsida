@@ -23,7 +23,7 @@
             position: relative;
         }
 
-        /* Större ljuseffekt som matchar den större logotypen */
+        /* Ljuseffekt ovanifrån */
         body::before {
             content: '';
             position: absolute;
@@ -44,7 +44,7 @@
             max-width: 700px;
         }
 
-        /* Rejält mycket större logotyp (300px bred) */
+        /* Stor maffig logotyp */
         .logo {
             width: 300px;
             height: auto;
@@ -62,8 +62,16 @@
         p {
             font-size: 1rem;
             color: #b0bcd0;
-            margin-bottom: 30px;
+            margin-bottom: 25px;
             line-height: 1.5;
+        }
+
+        /* Stil för texten ovanför knapparna */
+        .social-text {
+            font-size: 0.95rem;
+            color: #94a3b8;
+            margin-bottom: 12px;
+            font-weight: 400;
         }
 
         .social-buttons {
@@ -98,6 +106,8 @@
         
         <h1>Kvalitetstid för dina kort. Utan överpriser.</h1>
         <p>Vi bygger något nytt för alla svenska TCG-samlare. Inom kort öppnar vi shoppen med marknadens mest prisvärda tillbehör.</p>
+        
+        <div class="social-text">Följ med på resan - följ oss på våra sociala medier!</div>
         
         <div class="social-buttons">
             <a href="https://instagram.com" target="_blank" class="btn">Instagram</a>
