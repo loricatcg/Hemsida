@@ -5,76 +5,105 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lorica TCG</title>
     <style>
-        body {
-            background-color: #0d1117;
-            color: #f0f6fc;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
+        * {
             margin: 0;
-            text-align: center;
-            padding: 20px;
+            padding: 0;
+            box-sizing: border-box;
         }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            /* Flerfärgad gradient-bakgrund med mörka, exklusiva toner */
+            background: linear-gradient(135deg, #090d16 0%, #111c38 50%, #1a1229 100%);
+            color: #ffffff;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* Ljuseffekt ovanifrån som lyser på logotypen */
+        body::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 400px;
+            background: radial-gradient(ellipse at center, rgba(120, 150, 255, 0.15) 0%, rgba(20, 30, 60, 0) 70%);
+            pointer-events: none;
+            z-index: 1;
+        }
+
         .container {
-            max-width: 500px;
-            width: 100%;
+            text-align: center;
+            z-index: 2;
+            padding: 20px;
+            max-width: 600px;
         }
+
+        /* Större logotyp och snygg glöd/skugga */
         .logo {
-            max-width: 180px;
-            width: 100%;
+            width: 140px; /* Gör logotypen större */
             height: auto;
-            margin-bottom: 24px;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
         }
+
         h1 {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 600;
             margin-bottom: 12px;
-            letter-spacing: -0.5px;
+            letter-spacing: 0.5px;
         }
+
         p {
-            color: #8b949e;
             font-size: 1rem;
+            color: #b0bcd0;
+            margin-bottom: 30px;
             line-height: 1.5;
-            margin-bottom: 32px;
         }
-        .social-links {
+
+        .social-buttons {
             display: flex;
-            gap: 16px;
+            gap: 15px;
             justify-content: center;
         }
+
         .btn {
-            background-color: #21262d;
-            color: #f0f6fc;
+            background: rgba(255, 255, 255, 0.08);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 10px 24px;
+            border-radius: 8px;
             text-decoration: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-size: 0.95rem;
             font-weight: 500;
-            border: 1px solid #30363d;
-            transition: background-color 0.2s, border-color 0.2s;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
         }
+
         .btn:hover {
-            background-color: #30363d;
-            border-color: #8b949e;
+            background: rgba(255, 255, 255, 0.18);
+            border-color: rgba(255, 255, 255, 0.3);
+            transform: translateY(-2px);
         }
     </style>
 </head>
 <body>
 
     <div class="container">
-        <!-- Byt ut 'logo.png' till namnet på din logotypbild -->
+        <!-- Byt ut 'logo.png' mot namnet på din bildfil om den heter något annat -->
         <img src="logo.png" alt="Lorica TCG Logo" class="logo">
         
         <h1>Kvalitetstid för dina kort. Utan överpriser.</h1>
-        
         <p>Vi bygger något nytt för alla svenska TCG-samlare. Inom kort öppnar vi shoppen med marknadens mest prisvärda tillbehör.</p>
         
-        <div class="social-links">
-            <a href="https://www.instagram.com/loricatcg/" target="_blank" class="btn">Instagram</a>
-            <a href="https://www.tiktok.com/@loricatcg" target="_blank" class="btn">TikTok</a>
+        <div class="social-buttons">
+            <a href="https://instagram.com" target="_blank" class="btn">Instagram</a>
+            <a href="https://tiktok.com" target="_blank" class="btn">TikTok</a>
         </div>
     </div>
 
