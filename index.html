@@ -13,7 +13,6 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            /* Flerfärgad gradient-bakgrund med mörka, exklusiva toner */
             background: linear-gradient(135deg, #090d16 0%, #111c38 50%, #1a1229 100%);
             color: #ffffff;
             height: 100vh;
@@ -24,16 +23,16 @@
             position: relative;
         }
 
-        /* Ljuseffekt ovanifrån som lyser på logotypen */
+        /* Större ljuseffekt som matchar den större logotypen */
         body::before {
             content: '';
             position: absolute;
-            top: -100px;
+            top: -150px;
             left: 50%;
             transform: translateX(-50%);
-            width: 600px;
-            height: 400px;
-            background: radial-gradient(ellipse at center, rgba(120, 150, 255, 0.15) 0%, rgba(20, 30, 60, 0) 70%);
+            width: 800px;
+            height: 500px;
+            background: radial-gradient(ellipse at center, rgba(120, 150, 255, 0.18) 0%, rgba(20, 30, 60, 0) 70%);
             pointer-events: none;
             z-index: 1;
         }
@@ -42,15 +41,15 @@
             text-align: center;
             z-index: 2;
             padding: 20px;
-            max-width: 600px;
+            max-width: 700px;
         }
 
-        /* Större logotyp och snygg glöd/skugga */
+        /* Rejält mycket större logotyp (300px bred) */
         .logo {
-            width: 140px; /* Gör logotypen större */
+            width: 300px;
             height: auto;
-            margin-bottom: 25px;
-            filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.5));
+            margin-bottom: 30px;
+            filter: drop-shadow(0 15px 30px rgba(0, 0, 0, 0.6));
         }
 
         h1 {
@@ -95,7 +94,6 @@
 <body>
 
     <div class="container">
-        <!-- Byt ut 'logo.png' mot namnet på din bildfil om den heter något annat -->
         <img src="logo.png" alt="Lorica TCG Logo" class="logo">
         
         <h1>Kvalitetstid för dina kort. Utan överpriser.</h1>
