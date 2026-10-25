@@ -42,6 +42,7 @@
             z-index: 2;
             padding: 20px;
             max-width: 700px;
+            width: 100%;
         }
 
         /* Stor maffig logotyp */
@@ -64,6 +65,57 @@
             color: #b0bcd0;
             margin-bottom: 25px;
             line-height: 1.5;
+        }
+
+        /* Stil för e-postformuläret */
+        .newsletter-form {
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            max-width: 450px;
+            margin: 0 auto 25px auto;
+        }
+
+        .newsletter-input {
+            flex: 1;
+            padding: 12px 16px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 0.95rem;
+            outline: none;
+            backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
+        }
+
+        .newsletter-input::placeholder {
+            color: #94a3b8;
+        }
+
+        .newsletter-input:focus {
+            border-color: rgba(120, 150, 255, 0.6);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .newsletter-btn {
+            background: rgba(255, 255, 255, 0.15);
+            color: #ffffff;
+            border: 1px solid rgba(255, 255, 255, 0.25);
+            padding: 12px 20px;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.95rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(5px);
+            white-space: nowrap;
+        }
+
+        .newsletter-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.4);
+            transform: translateY(-2px);
         }
 
         /* Stil för texten ovanför knapparna */
@@ -97,6 +149,16 @@
             border-color: rgba(255, 255, 255, 0.3);
             transform: translateY(-2px);
         }
+
+        /* Anpassning för mobiler */
+        @media (max-width: 480px) {
+            .newsletter-form {
+                flex-direction: column;
+            }
+            .logo {
+                width: 240px;
+            }
+        }
     </style>
 </head>
 <body>
@@ -107,6 +169,12 @@
         <h1>Du samlar - vi skyddar!</h1>
         <p>Byggs av samlare, för samlare. Inom snar framtid öppnar vi shoppen med marknadens mest prisvärda tillbehör.</p>
         
+        <!-- E-postformulär -->
+        <form action="https://formspree.io/f/DITT_FORMSPREE_ID" method="POST" class="newsletter-form">
+            <input type="email" name="email" placeholder="Din e-postadress..." required class="newsletter-input">
+            <button type="submit" class="newsletter-btn">Få info vid lansering</button>
+        </form>
+
         <div class="social-text">Följ med på resan - följ oss på våra sociala medier!</div>
         
         <div class="social-buttons">
