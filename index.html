@@ -24,7 +24,7 @@
     .eyebrow{color:#98adff;font-size:12px;text-transform:uppercase;letter-spacing:.2em;font-weight:700;margin:0 0 10px}
     h2{font-size:clamp(19px,3vw,24px);margin:0 0 8px;font-weight:700}
     .helper{font-size:14px;color:var(--muted);line-height:1.55;margin:0 0 18px}
-    form{display:flex;flex-wrap:wrap;gap:10px}
+    form{display:flex;flex-wrap:wrap;gap:10px}form[hidden]{display:none!important}
     input[type=email]{min-width:0;flex:1 1 220px;background:rgba(255,255,255,.055);border:1px solid rgba(255,255,255,.24);border-radius:9px;padding:14px 16px;font:500 15px "Quicksand",sans-serif;color:white;outline:none}
     input[type=email]::placeholder{color:#a9b0c3}
     input[type=email]:focus-visible{border-color:#a8b8ff;box-shadow:0 0 0 3px rgba(103,137,234,.17)}
@@ -66,7 +66,7 @@
         <label class="consent"><input type="checkbox" name="marketing_consent" value="Ja" required>Jag vill få mejl från Lorica TCG om lanseringen, rabattkoden och erbjudanden. Jag kan avregistrera mig när som helst.</label>
       </form>
       <p class="privacy">Vi använder din mejladress för de utskick du godkänner. Kontakta oss via våra sociala kanaler om du vill få dina uppgifter borttagna.</p>
-      <div id="success-message" class="status" role="status" aria-live="polite">Tack! Du finns med på listan. Vi mejlar dig när butiken öppnar.</div>
+      <div id="success-message" class="status" role="status" aria-live="polite">✓ Du är med på listan! Vi skickar din rabattkod på 20 % när Lorica öppnar.</div>
       <div id="error-message" class="status error" role="alert" aria-live="assertive">Det gick inte att registrera mejladressen just nu. Försök igen.</div>
     </section>
     <div class="divider" aria-hidden="true"></div>
