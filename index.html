@@ -45,7 +45,7 @@
     .reveal{animation:rise .8s both}.reveal:nth-of-type(2){animation-delay:.15s}
     @keyframes rise{from{opacity:0;transform:translateY(13px)}to{opacity:1;transform:translateY(0)}}
     @keyframes light{from{transform:translate(-2%,0) scale(1)}to{transform:translate(3%,2%) scale(1.12)}}
-    @media(max-width:540px){main{padding:42px 22px 52px}.logo{width:220px;margin-bottom:24px}.lead{margin-bottom:32px}form{flex-direction:column}form input,form button{width:100%;flex:auto}nav a{min-width:120px}}
+    @media(max-width:540px){main{padding:42px 22px 52px}.logo{width:220px;margin-bottom:24px}.lead{margin-bottom:32px}form{flex-direction:column}form input[type=email],form button{width:100%;flex:none}form input[type=email]{height:48px;min-height:48px}form button{min-height:48px}.consent input[type=checkbox]{width:16px;height:16px;flex:0 0 16px}nav a{min-width:120px}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
   </style>
 </head>
