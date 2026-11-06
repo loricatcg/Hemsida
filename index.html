@@ -47,6 +47,19 @@
     @keyframes light{from{transform:translate(-2%,0) scale(1)}to{transform:translate(3%,2%) scale(1.12)}}
     @media(max-width:540px){main{padding:42px 22px 52px}.logo{width:220px;margin-bottom:24px}.lead{margin-bottom:32px}form{flex-direction:column}form input[type=email],form button{width:100%;flex:none}form input[type=email]{height:48px;min-height:48px}form button{min-height:48px}.consent input[type=checkbox]{width:16px;height:16px;flex:0 0 16px}nav a{min-width:120px}}
     @media(prefers-reduced-motion:reduce){*,*:before,*:after{animation:none!important;transition:none!important}}
+
+    [hidden]{display:none!important}
+    .cookie-settings{display:block;margin:24px auto 0;padding:8px 12px;background:transparent;color:#ccd5ff;border:1px solid var(--line);font-size:12px}
+    .cookie-banner{position:fixed;z-index:10;bottom:16px;left:16px;width:min(480px,calc(100% - 32px));max-height:calc(100svh - 32px);overflow:auto;padding:20px;background:#171d2d;border:1px solid #65739a;border-radius:12px;box-shadow:0 8px 32px #0008;text-align:left}
+    .cookie-banner h2{font-size:18px;margin:0 0 8px}
+    .cookie-banner p,.cookie-banner details{font-size:13px;line-height:1.6;color:#d1d6e3;margin:0 0 12px}
+    .cookie-banner summary{cursor:pointer;color:#ccd5ff;text-decoration:underline;text-underline-offset:3px}
+    .cookie-banner details p{margin:10px 0}
+    .cookie-banner a{color:#ccd5ff}
+    .cookie-actions{display:flex;flex-wrap:wrap;gap:10px}
+    .cookie-actions button{flex:1 1 180px;padding:12px}
+    button:focus-visible,summary:focus-visible,a:focus-visible{outline:3px solid #a8b8ff;outline-offset:3px}
+    @media(max-width:540px){body{padding-bottom:70px}.cookie-banner{bottom:10px;left:10px;width:calc(100% - 20px);padding:16px}.cookie-actions button{flex-basis:140px}}
   </style>
 </head>
 <body>
@@ -75,8 +88,119 @@
       <a href="https://www.instagram.com/loricatcg/" target="_blank" rel="noopener noreferrer">Instagram</a>
       <a href="https://www.tiktok.com/@loricatcg" target="_blank" rel="noopener noreferrer">TikTok</a>
     </nav>
+
+    <button class="cookie-settings" id="cookie-settings" type="button" aria-controls="cookie-banner" aria-expanded="true">Cookie-inställningar</button>
   </main>
+  <section class="cookie-banner" id="cookie-banner" aria-labelledby="cookie-title">
+    <h2 id="cookie-title">Cookies för statistik</h2>
+    <p>Får vi använda Google Analytics för att förstå besök och mäta anmälningar? Statistik är frivilligt. Du kan få din rabatt och anmäla dig även om du avvisar.</p>
+    <details>
+      <summary>Så använder vi cookies och uppgifter</summary>
+      <p>Om du godkänner skickar vi besöks- och enhetsuppgifter samt en händelse vid en lyckad anmälan till Google Analytics. Din mejladress och formulärets innehåll skickas inte till Analytics. Vi aktiverar inte annonsfunktioner.</p>
+      <p>Google Analytics använder cookies som börjar med _ga för att skilja besök åt. De får en livslängd på högst sex månader från det senaste besöket. Vi sparar ditt cookie-val i webbläsaren i sex månader. Du kan ändra eller återkalla ditt val via Cookie-inställningar.</p>
+      <p>Mejlanmälan hanteras separat av Formspree för de utskick du godkänner. Kontakta Lorica TCG på <a href="mailto:loricatcg@gmail.com">loricatcg@gmail.com</a> för frågor om dina uppgifter.
+      Läs även <a href="https://policies.google.com/privacy?hl=sv" target="_blank" rel="noopener noreferrer">Googles integritetspolicy</a> och <a href="https://formspree.io/legal/privacy-policy/" target="_blank" rel="noopener noreferrer">Formsprees integritetspolicy</a>.</p>
+    </details>
+    <div class="cookie-actions">
+      <button type="button" id="cookie-accept">Godkänn statistik</button>
+      <button type="button" id="cookie-reject">Avvisa statistik</button>
+    </div>
+  </section>
   <script>
+    // Basic consent mode: no Google script or measurement before opt-in.
+    const measurementId='G-0K7BTNNDH7';
+    const consentKey='lorica-statistics-consent-v1';
+    const consentLifetime=180*24*60*60*1000;
+    const banner=document.getElementById('cookie-banner');
+    const settings=document.getElementById('cookie-settings');
+    let analyticsAllowed=false;
+    let analyticsStarted=false;
+    let settingsOpened=false;
+    window.dataLayer=window.dataLayer||[];
+    function gtag(){window.dataLayer.push(arguments);}
+    window['ga-disable-'+measurementId]=true;
+
+    function readConsent(){
+      try{
+        const saved=JSON.parse(localStorage.getItem(consentKey));
+        if(saved&&['granted','denied'].includes(saved.choice)&&
+          Number.isFinite(saved.at)&&saved.at<=Date.now()&&Date.now()-saved.at<consentLifetime)return saved.choice;
+      }catch(e){}
+      return null;
+    }
+    function showBanner(visible){
+      banner.hidden=!visible;
+      settings.setAttribute('aria-expanded',String(visible));
+    }
+    function clearAnalyticsCookies(){
+      const host=location.hostname;
+      const parts=host.split('.');
+      const domains=['',host];
+      for(let i=0;i<parts.length-1;i++)domains.push('.'+parts.slice(i).join('.'));
+      for(const entry of document.cookie.split(';')){
+        const name=entry.trim().split('=')[0];
+        if(!/^_ga(?:_|$)/.test(name))continue;
+        for(const domain of domains){
+          document.cookie=name+'=; Max-Age=0; path=/'+(domain?'; domain='+domain:'')+'; SameSite=Lax';
+        }
+      }
+    }
+    function startAnalytics(){
+      if(analyticsStarted)return;
+      analyticsStarted=true;
+      window['ga-disable-'+measurementId]=false;
+      const defaults={analytics_storage:'denied',ad_storage:'denied',ad_user_data:'denied',ad_personalization:'denied'};
+      gtag('consent','default',defaults);
+      gtag('consent','update',{...defaults,analytics_storage:'granted'});
+      gtag('js',new Date());
+      // Exclude query strings and fragments, which may contain personal data.
+      let referrer='';
+      try{if(document.referrer){const url=new URL(document.referrer);referrer=url.origin+url.pathname;}}catch(e){}
+      gtag('config',measurementId,{
+        send_page_view:false,
+        page_location:location.origin+location.pathname,
+        page_referrer:referrer,
+        allow_google_signals:false,
+        allow_ad_personalization_signals:false,
+        cookie_expires:15552000
+      });
+      gtag('event','page_view');
+      const tag=document.createElement('script');
+      tag.async=true;
+      tag.src='https://www.googletagmanager.com/gtag/js?id='+measurementId;
+      document.head.appendChild(tag);
+    }
+    function saveChoice(choice){
+      const wasStarted=analyticsStarted;
+      try{localStorage.setItem(consentKey,JSON.stringify({choice,at:Date.now()}));}catch(e){}
+      analyticsAllowed=choice==='granted';
+      showBanner(false);
+      if(settingsOpened){settings.focus();settingsOpened=false;}
+      if(analyticsAllowed){startAnalytics();}
+      else{
+        window['ga-disable-'+measurementId]=true;
+        clearAnalyticsCookies();
+        // Unload an already loaded tag when consent is withdrawn.
+        if(wasStarted)location.reload();
+      }
+    }
+    document.getElementById('cookie-accept').addEventListener('click',()=>saveChoice('granted'));
+    document.getElementById('cookie-reject').addEventListener('click',()=>saveChoice('denied'));
+    settings.addEventListener('click',()=>{
+      const opening=banner.hidden;
+      settingsOpened=opening;
+      showBanner(opening);
+      if(opening)document.getElementById('cookie-accept').focus();
+    });
+    window.addEventListener('storage',event=>{
+      if(event.key===consentKey||event.key===null)location.reload();
+    });
+    const savedConsent=readConsent();
+    showBanner(savedConsent===null);
+    analyticsAllowed=savedConsent==='granted';
+    if(analyticsAllowed)startAnalytics();
+    else clearAnalyticsCookies();
+
     const form=document.getElementById('waitlist-form');
     const button=document.getElementById('submit-btn');
     const success=document.getElementById('success-message');
@@ -91,6 +215,7 @@
         if(!response.ok)throw new Error('Formspree error');
         form.hidden=true;
         success.style.display='block';
+        if(analyticsAllowed&&readConsent()==='granted')gtag('event','generate_lead',{form_id:'waitlist-form'});
       }catch(e){
         error.style.display='block';
         button.disabled=false;
